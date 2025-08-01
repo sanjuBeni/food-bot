@@ -4,10 +4,16 @@
   "main": "src/server.js",
   "scripts": {
     "dist": "npx tsc",
-    "test": "node test",
     "dev": "nodemon src/server.ts",
     "start": "node dist/server.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.ts": [
+        "npm run lint:fix"
+    ]
   },
   "keywords": [],
   "author": "",
@@ -19,10 +25,13 @@
   "devDependencies": {
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
+    "@eslint/js": "^9.32.0",
     "@types/node": "^24.1.0",
+    "eslint": "^9.32.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.1.2",
     "ts-node": "^10.9.2",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.38.0"
   }
 }
