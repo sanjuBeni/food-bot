@@ -5,7 +5,7 @@ import { ApplicatinEnvironmentEnum } from '../constant/application';
 import responseMsg from '../constant/responseMsg';
 import logger from './logger';
 
-export default (err: Error | string, req: Request, statusCode: number = 500) : HttpErrorType => {
+export default (err: Error | unknown, req: Request, statusCode: number = 500) : HttpErrorType => {
 
     const errorObj : HttpErrorType = {
         success: false,
