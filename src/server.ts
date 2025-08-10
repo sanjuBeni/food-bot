@@ -1,37 +1,32 @@
 import app from './app';
 import config from './config/config';
+import logger from './utils/logger';
 
-const {PORT} = config;
-// SERVER_URL
+const {PORT, SERVER_URL} = config;
 
-
-// const server = 
-app.listen(PORT);
+const server = app.listen(PORT);
 
 ;(() => {
-    // try {
-    //     // Database connection
-    //     // console.info(`Applicatin Started`, {
-    //     //     meta: {
-    //     //         PORT,
-    //     //         SERVER_URL
-    //     //     }
-    //     // })
+    try {
+        // Database connection
+        logger.info(`Applicatin Started`, {
+            meta: {
+                PORT,
+                SERVER_URL
+            }
+        })
         
-    // } catch (error) {
-    //     // create log
-    //     error;
-    //     // console.error(`Applicatin error`, {
-    //     //     meta: error
-    //     // });
-
-    //     // (err)
-    //     server.close(() => {
-    //         // console.error(`Server Close error`, {
-    //         //     meta: err
-    //         // });
-    //         // all application is terminated with this 
-    //         process.exit(1);
-    //     });
-    // }
+    } catch (error) {
+        // create log
+        logger.error(`Applicatin error`, {
+            meta: error
+        });
+        server.close((err) => {
+            logger.error(`Server Close error`, {
+                meta: err
+            });
+            // all application is terminated with this 
+            process.exit(1);
+        });
+    }
 })()

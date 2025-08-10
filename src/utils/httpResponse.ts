@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import {HttpResponseType} from '../types/HttpResponseType';
 import { ApplicatinEnvironmentEnum } from '../constant/application';
 import config from '../config/config';
+import logger from './logger';
 
 
 export default (req: Request, res: Response, statusCode: number, message: string, data: unknown = null) : void => {
@@ -19,9 +20,9 @@ export default (req: Request, res: Response, statusCode: number, message: string
     }
 
     // Log file create todo--
-    // console.info('controller response', {
-    //     meta : response
-    // })
+    logger.info('controller response', {
+        meta : response
+    })
 
     // Production Env Check
     if(config.ENV === ApplicatinEnvironmentEnum.PRODUCTION) {

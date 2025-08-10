@@ -3,8 +3,9 @@ import {HttpErrorType} from '../types/HttpResponseType'
 import config from '../config/config';
 import { ApplicatinEnvironmentEnum } from '../constant/application';
 import responseMsg from '../constant/responseMsg';
+import logger from './logger';
 
-export default (err: Error, req: Request, statusCode: number = 500) : HttpErrorType => {
+export default (err: Error | string, req: Request, statusCode: number = 500) : HttpErrorType => {
 
     const errorObj : HttpErrorType = {
         success: false,
@@ -20,9 +21,9 @@ export default (err: Error, req: Request, statusCode: number = 500) : HttpErrorT
     }
 
     // log file
-    // console.error('some error', {
-    //     meta: errorObj 
-    // });
+    logger.error('some error', {
+        meta: errorObj 
+    });
 
     if(config.ENV === ApplicatinEnvironmentEnum.PRODUCTION) {
         delete errorObj.request.ip;
