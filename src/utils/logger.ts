@@ -1,3 +1,4 @@
+import 'winston-mongodb'; 
 import {createLogger, format, transports} from "winston";
 import { ConsoleTransportInstance, FileTransportInstance } from "winston/lib/winston/transports";
 import util from 'util';
@@ -5,6 +6,7 @@ import { ApplicatinEnvironmentEnum } from "../constant/application";
 import config from "../config/config";
 import path from "path";
 import * as sourceMapSupport from 'source-map-support';
+import { MongoDBTransportInstance } from 'winston-mongodb';
 
 // Linking Trace Support
 sourceMapSupport.install();
@@ -71,12 +73,27 @@ const fileTransports = () : Array<FileTransportInstance> => {
     ];
 }
 
+
+const mongodbTransports = () : Array<MongoDBTransportInstance> => {
+    return [
+        new transports.MongoDB({
+            level: 'info',
+            db: config.DATABASE_URL,
+            metaKey: "Meta",
+            expireAfterSeconds: 3600*24*30,
+            collection: 'application_logs'
+        })
+    ];
+}
+
+
 export default createLogger({
     defaultMeta: {
         meta: {} 
     },
     transports: [
         ...fileTransports(),
+        ...mongodbTransports(),
         ...consoleTransports()
     ],
 });

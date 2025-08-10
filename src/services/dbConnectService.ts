@@ -4,7 +4,7 @@ import logger from "../utils/logger";
 
 const dbConnectService = async() => {
     try {
-        await mongoose.connect(`${config.DATABASE_URL}/productioin_setup`);
+        await mongoose.connect(`${config.DATABASE_URL}`);
         return mongoose.connection;
     } catch (error) {
         logger.info('Db Connection Error', {
