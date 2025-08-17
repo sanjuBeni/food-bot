@@ -5,11 +5,14 @@ import userRouters from './routes/user.routes';
 import globalErrorHandler from './middlewares/globalErrorHandler';
 import responseMsg from './constant/responseMsg';
 import httpError from './utils/httpError';
+import apiRoutes from './routes/api.router';
+import helmet from 'helmet';
 
 const app: Application = express();
 
 // Express Middleware
 
+app.use(helmet());
 // With this help of Cors we can access the diff-2 PORT request 
 app.use(cors({
     // origin: [process.env.CORS_ORIGIN],
@@ -30,6 +33,9 @@ app.use(express.urlencoded({
 
 // Hanlde the public folder
 app.use(express.static(path.join(__dirname, '../', 'public')));
+
+
+app.use('/api/v1', apiRoutes);
 
 app.use('/api/v1', userRouters);
 

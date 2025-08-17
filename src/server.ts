@@ -2,6 +2,7 @@ import app from './app';
 import config from './config/config';
 import logger from './utils/logger';
 import dbConnectService from './services/dbConnectService';
+import { initRateLimiter } from './config/rateLimiter';
 
 const {PORT, SERVER_URL} = config;
 
@@ -13,7 +14,13 @@ const server = app.listen(PORT);
         const conn = await dbConnectService();
         logger.info('DB Coonection', {
             meta : conn.name
-        });        
+        });   
+        
+        initRateLimiter(conn);
+
+        logger.info(`Rate Limiter Intiated.`, {
+        })
+
 
         logger.info(`Applicatin Started`, {
             meta: {
